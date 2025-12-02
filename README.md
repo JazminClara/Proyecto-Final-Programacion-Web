@@ -3,7 +3,7 @@
 Aplicación web desarrollada con **Spring Boot** para gestionar presupuestos de alfombras personalizadas.  
 Permite registrar clientes, tamaños de alfombras, materiales utilizados (telas, hilados, pegamentos, etc.) y calcular el precio final del presupuesto. Incluye una interfaz web hecha con **Thymeleaf** y **Bootstrap**.
 
-> 💡 Pensado como parte de la cursada de Programación Web / Desarrollo de Apliclicaciones Web y también como proyecto real para un emprendimiento de alfombras.
+> 💡 Pensado como parte de la cursada de Programación Web / Desarrollo de Apliclicaciones Web y Gestión de Base de Datos.
 
 ---
 
@@ -14,8 +14,7 @@ Permite registrar clientes, tamaños de alfombras, materiales utilizados (telas,
 - **Spring Boot**
   - Spring Web (controladores MVC)
   - Spring Data JPA (repositorios y acceso a datos)
-  - Spring Validation (validaciones de formularios)
-  - Spring Security (protección de endpoints y login básico) ← _si no lo usaste, podés borrar esta línea_
+  - Spring Security (protección de endpoints y login básico)
 - **Hibernate** (implementación JPA)
 - **Maven** (gestor de dependencias y build)
 
@@ -31,9 +30,9 @@ Permite registrar clientes, tamaños de alfombras, materiales utilizados (telas,
 - Script SQL para carga inicial de datos de prueba (insert de presupuestos y materiales)
 
 ### Herramientas de desarrollo
-- **Git & GitHub** (control de versiones)
-- **IDE:** IntelliJ IDEA / STS / Eclipse (lo que estés usando)
-- **Postman** (para probar endpoints REST, especialmente métodos `DELETE` y filtros)
+- **GitHub** (control de versiones)
+- **IDE:** Visual Studio Code
+- **Postman** (para probar endpoints REST y filtros)
 
 ---
 
@@ -68,17 +67,17 @@ El objetivo de la aplicación es gestionar de forma sencilla los **presupuestos 
 - Relación entre `Presupuesto` y los materiales a través de claves foráneas  
   (por ejemplo: `id_tela_base`, `id_tela_fondo`, `id_hilado`, `id_pegamento`)
 
-### 🔐 Seguridad (si lo estás usando)
+### 🔐 Seguridad
 - Configuración de **Spring Security** para:
   - Proteger rutas específicas
   - Permitir usar Postman para probar endpoints `DELETE`/`PUT` sin romper la app
-- Usuarios en memoria / configuración básica según la cursada
 
 ### 🖼️ Interfaz
 - Vistas en Thymeleaf:
-  - Listado de presupuestos
   - Formulario de creación/edición
   - Listado y formularios de materiales
+- HTML con JS, CSS y Boostrap:
+  - Listado de presupuestos
 - Botones con íconos (editar / eliminar) usando `<img th:src="@{imagenes/...}">`
 - Estilos con **Bootstrap 5**:
   - Tablas responsive
@@ -89,27 +88,27 @@ El objetivo de la aplicación es gestionar de forma sencilla los **presupuestos 
 
 ## 🧱 Modelo de datos (resumen)
 
-> Los nombres pueden variar según tu proyecto; ajustalos como los tengas en tus entidades.
-
 **Entidad `Presupuesto` (ejemplo):**
 - `idPresupuesto` (PK)
 - `nombreCliente`
 - `anchoAlfombra`
 - `largoAlfombra`
+- `id_tela_base`
+- `id_tela_fondo`
+- `id_hilado`
+- `id_pegamento`
 - `precioTotal`
+- 
 - Relaciones:
-  - `telaBase` → `TelaBase`
-  - `telaFondo` → `TelaFondo`
-  - `hilado` → `Hilado`
-  - `pegamento` → `Pegamento`
+  - `id_tela_base` → `Telas`
+  - `id_tela_fondo` → `Telas`
+  - `id_hilado` → `Hilados`
+  - `id_pegamento`` → `Pegamentos`
 
 **Otras entidades:**
-- `TelaBase`  
-- `TelaFondo`  
+- `Telas`    
 - `Hilado`  
 - `Pegamento`  
-
-Cada una con su `id` propio y campos como `nombre`, `descripcion`, `precioUnitario`, etc.
 
 ---
 
@@ -130,24 +129,6 @@ Ejemplo de estructura en `src/main/java`:
 - `model` / `entity`  
   Entidades JPA anotadas con `@Entity`.
 
-- `dto`  
-  Objetos de transferencia de datos para separar entidad ↔ formulario/vista  
-  (si los estás usando en este proyecto).
-
 - `config`  
   Clases de configuración (por ejemplo, `SecurityConfig`).
 
----
-
-## ⚙️ Configuración y ejecución
-
-### Prerrequisitos
-- Java 17+
-- Maven
-- MySQL / MariaDB en ejecución
-
-### 1. Clonar el repositorio
-
-```bash
-git clone https://github.com/tu-usuario/tu-repo-presupuestos-alfombras.git
-cd tu-repo-presupuestos-alfombras
